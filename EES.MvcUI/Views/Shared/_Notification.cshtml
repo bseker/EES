@@ -1,0 +1,43 @@
+﻿<link href="~/Content/plugins/toastr/toastr.css" rel="stylesheet" />
+<script src="~/Content/plugins/toastr/toastr.js"></script>
+
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": false,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "500",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "linear",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+</script>
+
+@if (TempData["notification"] != null)
+{
+    var notifyType = TempData["notificationType"].ToString();
+    var notifyTitle = TempData["notificationTitle"].ToString();
+
+    <script>
+        toastr["@notifyType"]("@TempData["notification"].ToString()", "@notifyTitle");
+    </script>
+}
+else if (ViewData["notification"] != null)
+{
+    var notifyType = ViewData["notificationType"].ToString();
+    var notifyTitle = ViewData["notificationTitle"].ToString();
+
+    <script>
+        toastr["@notifyType"]("@ViewData["notification"].ToString()", "@notifyTitle");
+    </script>
+}
+
+

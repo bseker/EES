@@ -1,0 +1,119 @@
+﻿@model EES.Entities.Concrete.EvaluationQuestion
+@{
+    ViewBag.Title = "ManageEvaluationQuestions";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Manage Evaluation Questions
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <div class="box-body">
+
+                        @Html.HiddenFor(t => t.QuestionId)
+
+
+                        <div class="form-group">
+
+                            @Html.LabelFor(t => t.QuestionText, "Question", new { @class = "col-sm-4 control-label" })
+                            <div class="col-sm-6">
+                                @Html.TextAreaFor(t => t.QuestionText, new { @class = "form-control" })
+                                @* @Html.ValidationMessageFor(t => t.Artist.ArtistName)*@
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.QuestionWeight, "Question Weight", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(t => t.QuestionWeight, "Number")
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.RoleId, "Question Type", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-10">
+                                @Html.EditorFor(t => t.RoleId, "Number")
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-info btn-flat pull-right">Add Question</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Question List of The System</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="tblQuestions" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+
+                                        <th>Question Text</th>
+
+                                        <th>Question Weigth</th>
+
+                                        <th>Question Type</th>
+
+
+                                        <th data-orderable="false"></th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                            <button class="btn btn-xs btn-warning btn-flat">Send Reminder Mail to All</button>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+</section>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#tblQuestions').DataTable({
+                "processing": true,
+                "ajax": '@Url.Action("ListEvaluationQuestions","SystemSettings",new{area="Admin"})',
+                "deferRender": true,
+                "columns": [
+
+                    { "data": "QuestionText" },
+
+                    { "data": "QuestionWeight" },
+
+                    { "data": "RoleId" },
+
+
+                    {
+                        "class": "text-center",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-xs btn-info btn-flat" >Delete Question</a> ' ;
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}

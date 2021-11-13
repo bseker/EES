@@ -1,0 +1,10 @@
+@model object
+
+@Html.TextBoxFor(m => m, new { type = "number",style="width:100%" })
+<script>
+    $(function () {
+        $("#@ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty)").kendoNumericTextBox({
+            format: "#"
+        });
+    });
+</script>

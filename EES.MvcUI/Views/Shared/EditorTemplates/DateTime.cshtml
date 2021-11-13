@@ -1,0 +1,8 @@
+@model DateTime?
+
+@Html.TextBoxFor(m => m, new { type = "datetime",style="width:100%" })
+<script>
+    $(function() {
+        $("#@ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty)").kendoDateTimePicker();
+    });
+</script>

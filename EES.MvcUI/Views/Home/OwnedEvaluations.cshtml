@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "OwnedEvaluations";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+
+
+<section class="content-header">
+    <h1>
+        Evaluations Given To You
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    @*<h3 class="box-title">List of the Conducted Evaluations</h3>*@
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="tblOwnedEvaluations" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+
+                                <th>EvaluationId</th>
+                                <th>Evaluation Score</th>
+                                <th>Evaluation Year</th>
+                                <th>Evaluation Comment</th>
+                                <th>Evaluating Employee Name</th>
+
+                                <th>Evaluating Employee Surname</th>
+
+
+                                
+
+                                
+
+                                <th data-orderable="false"></th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                    @*<button class="btn btn-xs btn-warning btn-flat">Print All(Accessible by HR)</button>*@
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+</section>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#tblOwnedEvaluations').DataTable({
+                "processing": true,
+                "ajax": '@Url.Action("OwnedEvaluationList", "Home")',
+                "deferRender": true,
+                "createdRow": function(row, data, dataIndex) {
+                    if (dataIndex === "4") {
+                        $(row).addClass('bg-red');
+                    }
+                },
+                "columns": [
+
+                    { "data": "EvaluationId" },
+
+                    { "data": "Score" },
+
+                    { "data": "Year" },
+
+                    { "data": "CommentText" },
+
+                    { "data": "EvaluatingEmployeeName" },
+
+                    { "data": "EvaluatingEmployeeSurname" },
+                    
+
+                  /*  {
+                        "class": "text-center",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-xs btn-info btn-flat" >View Detail</a> ' + '<a class="btn btn-xs btn-primary btn-flat" >Print</a> ';
+                        }
+                    }*/
+                ]
+            });
+        });
+    </script>
+}
+
+
+
+

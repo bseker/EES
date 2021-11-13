@@ -1,0 +1,135 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    @*<link rel="icon" href="favicon.ico">*@
+
+    <title>Employee Evaluation System</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Areas/Admin/Content/plugins/kendo-ui-core/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/plugins/kendo-ui-core/styles/kendo.bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="~/Areas/Admin/Content/plugins/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Areas/Admin/Content/plugins/datatables/dataTables.bootstrap.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Areas/Admin/Content/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+          page. However, you can choose any other skin. Make sure you
+          apply the skin class to the body tag so the changes take effect.
+    -->
+    <link rel="stylesheet" href="~/Areas/Admin/Content/css/skins/skin-blue.min.css">
+    <link href="~/Areas/Admin/Content/css/custom.css" rel="stylesheet" />
+    
+
+    <link href="~/Content/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/carusel.css" rel="stylesheet" />
+    <script src="~/Areas/Admin/Content/plugins/jQuery/jquery-2.2.3.min.js"></script>
+</head>
+<!-- NAVBAR
+================================================== -->
+<body class="hold-transition skin-purple sidebar-mini">
+    @Html.Partial("_Notification")
+    <div class="navbar-wrapper">
+        <div class="container">
+            <nav class="navbar navbar-inverse navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/">Employee Evaluation System</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/">Home</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Evaluation Actions<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/Home/OwnedEvaluations">Owned Evaluations</a></li>
+                                    <li><a href="/Home/AssignedEvaluations">Assigned Evaluations</a></li>
+                                    <li><a href="/Home/SearchEvaluations">Search Evaluations</a></li>
+                                    <li role="separator" class="divider"></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            @* @if (HttpContext.Current.User.IsInRole("Employee User"))
+                                {
+                                    <li><a href="#" style="color:aliceblue" >@HttpContext.Current.User.Identity.Name // User</a></li>
+
+                                }*@
+                            @*<li><a href="#" style="color:aliceblue">@HttpContext.Current.User.Identity.Name  </a></li>*@
+
+                           
+                            @if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                            {
+
+                              
+
+                                <li><a href="@Url.Action("Login", "Auth",new {area=""})">Log In</a></li>
+                                //<li><a href="@Url.Action("SignUp", "Authentication",new {area=""})">Sign Up</a></li>
+                            }
+                            else
+                            {
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@HttpContext.Current.User.Identity.Name<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        @if (HttpContext.Current.User.IsInRole("HR User") || HttpContext.Current.User.IsInRole("IT User"))
+                                        {
+                                            <li><a href="@Url.Action("Index", "Dashboard",new {area="Admin"})">Manager Panel</a></li>
+                                        }
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="@Url.Action("Logout", "Auth",new {area=""})">Log Out</a></li>
+                                    </ul>
+                                </li>
+                                
+                                
+                            }
+                            
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+<div class="container" style="margin-top: 5%">
+    @RenderBody()
+</div>
+    
+    <!-- ./wrapper -->
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- Bootstrap 3.3.6 -->
+    <script src="~/Areas/Admin/Content/plugins/bootstrap/js/bootstrap.min.js"></script>
+    @*<script src="~/Areas/Admin/Content/plugins/kendo-ui-core/js/kendo.core.min.js"></script>*@
+    <script src="~/Areas/Admin/Content/plugins/kendo-ui-core/js/kendo.ui.core.min.js"></script>
+    @*<script src="~/Areas/Admin/Content/plugins/kendo-ui-core/js/cultures/kendo.culture.tr-TR.min.js"></script>
+        <script src="~/Areas/Admin/Content/plugins/kendo-ui-core/js/messages/kendo.messages.tr-TR.min.js"></script>*@
+
+    <!-- DataTables -->
+    <script src="~/Areas/Admin/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Areas/Admin/Content/plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+    @RenderSection("scripts", false)
+
+    <!-- AdminLTE App -->
+    <script src="~/Areas/Admin/Content/js/app.min.js"></script>
+    <!-- Optionally, you can add Slimscroll and FastClick plugins.
+    Both of these plugins are recommended to enhance the
+    user experience. Slimscroll is required when using the
+    fixed layout. -->
+
+</body>
+</html>

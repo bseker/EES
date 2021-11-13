@@ -1,0 +1,87 @@
+
+
+@model EvaluationQuestionSaveViewModel
+
+@{
+    ViewBag.Title = "EvaluationQuestion Save";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        EvaluationQuestion Save
+        <small>
+            <a href="@Url.Action("Index","EvaluationQuestion",new{area="Admin"})">
+                <i class="glyphicon glyphicon-chevron-left"></i> Back to EvaluationQuestion List
+            </a>
+        </small>
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                @*<div class="box-header with-border">
+                        <h3 class="box-title">Quick Example</h3>
+                    </div>*@
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="box-body">
+                     
+
+                             
+                                 @Html.HiddenFor(t=>t.EvaluationQuestion.QuestionId)
+                                          
+
+                     
+
+                            
+                                <div class="form-group">
+                                    @Html.LabelFor(t => t.EvaluationQuestion.QuestionText, "QuestionText", new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-10">
+                                         @Html.TextBoxFor(t => t.EvaluationQuestion.QuestionText, new { @class = "form-control"})
+                                         @Html.ValidationMessageFor(t=>t.EvaluationQuestion.QuestionText)
+                                    </div>
+                                </div>
+                                          
+
+                     
+
+                            
+                                <div class="form-group">
+                                    @Html.LabelFor(t => t.EvaluationQuestion.QuestionWeight, "QuestionWeight", new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-10">
+                                          @Html.EditorFor(t => t.EvaluationQuestion.QuestionWeight,"Number")
+                                          @Html.ValidationMessageFor(t=>t.EvaluationQuestion.QuestionWeight)
+                                    </div>
+                                </div>
+                                          
+
+                     
+
+                            
+                                <div class="form-group">
+                                    @Html.LabelFor(t => t.EvaluationQuestion.RoleId, "QuestionType", new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-10">
+                                           @Html.DropDownListFor(t => t.EvaluationQuestion.RoleId, new SelectList(Model.Roles, "RoleId", "RoleName"), new { @class = "form-control" })
+
+
+                                           @Html.ValidationMessageFor(t=>t.EvaluationQuestion.RoleId)
+                                    </div>
+                                </div>
+                                          
+
+                     
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-info btn-flat pull-right">Save</button>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>
+

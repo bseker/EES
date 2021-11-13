@@ -1,0 +1,76 @@
+
+
+@{
+    ViewBag.Title = "EmployeeProject List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        EmployeeProject
+        <small>EmployeeProject List</small>
+
+        <a href="@Url.Action("Create","EmployeeProject",new{area="Admin"})" class="btn btn-xs btn-primary pull-right">
+            <i class="glyphicon glyphicon-plus"></i> Add New EmployeeProject
+        </a>
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                @*<div class="box-header">
+                        <h3 class="box-title">Data Table With Full Features</h3>
+                    </div>*@
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="tblEmployeeProject" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                 
+                                <th>EmployeeProjectId</th> 
+                                 
+                                <th>EmployeeRoleId</th> 
+                                 
+                                <th>ProjectId</th> 
+                                 
+                                <th data-orderable="false"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#tblEmployeeProject').DataTable({
+                "processing": true,
+                "ajax": '@Url.Action("List","EmployeeProject",new{area="Admin"})',
+                "deferRender": true,
+                "columns": [
+                     
+                    { "data": "EmployeeProjectId" },
+                     
+                    { "data": "EmployeeRoleId" },
+                     
+                    { "data": "ProjectId" },
+                     
+                    {
+                        "class": "text-center",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-xs btn-info btn-flat" href="@Url.Action("Edit","EmployeeProject",new{area="Admin"})?employeeProjectId='+row.EmployeeProjectId+'">Edit</a> ' +
+                                   '<a class="btn btn-xs btn-danger btn-flat" href="@Url.Action("Delete","EmployeeProject",new{area="Admin"})?employeeProjectId='+row.EmployeeProjectId+'">Delete</a>';
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}

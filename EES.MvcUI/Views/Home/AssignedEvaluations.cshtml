@@ -1,0 +1,140 @@
+﻿@model EES.MvcUI.Models.AssignedEvaluationsViewModel
+@{
+    ViewBag.Title = "OwnedEvaluations";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+<h3 class="alert-info">Evaluations Assigned To You</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+
+            <h4>Peer Evaluations</h4>
+            @if (Model.PeerEmployees.Count != 0)
+            {
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>Employee Id</td>
+                        <td> Employee Name & Surname</td>
+                        <td> Department Name</td>
+                    </tr>
+                    </thead>
+                    @foreach (var item in Model.PeerEmployees)
+                    {
+
+                        <tr>
+                            <td>@item.EmployeeId</td>
+                            <td>@item.Name @item.Surname</td>
+                            <td>@item.DepartmentId </td>
+                            <td><a href="@Url.Action("EvaluatePeer", "Home")?employeeId=@item.EmployeeId" class="btn btn-xs btn-info btn-flat ">Evaluate</a></td>
+                        </tr>
+
+                    }
+                </table>
+            }
+            else
+            {
+                <p class="warning">There are no peers</p>
+            }
+
+        </div>
+        <div class="col-lg-6">
+            <h4>Supervisor Evaluation</h4>
+            @if (Model.Supervisor.EmployeeId != 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Employee Id</td>
+                            <td> Employee Name & Surname</td>
+                            <td> Department Name</td>
+                        </tr>
+                    </thead>
+
+                    <tr>
+
+                        <td>@Model.Supervisor.EmployeeId</td>
+                        <td>@Model.Supervisor.Name @Model.Supervisor.Surname</td>
+                        <td>@Model.Supervisor.DepartmentId </td>
+                        <td><a href="@Url.Action("EvaluateSupervisor","Home")?evaluatedEmployeeId=@Model.Supervisor.EmployeeId" class="btn btn-xs btn-info btn-flat ">Evaluate</a></td>
+
+                    </tr>
+
+                </table>    
+            }
+            else
+            {
+                <p class="warning">There are no supervisor</p>
+            }
+
+
+        </div>
+
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>Project Evaluations</h4>
+            @if (Model.ProjectMembers.Count != 0)
+            {
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>Employee Id</td>
+                        <td> Employee Name & Surname</td>
+                        <td> Department Name</td>
+                    </tr>
+                    </thead>
+                    @foreach (var item in Model.ProjectMembers)
+                    {
+
+                        <tr>
+                            <td>@item.EmployeeId</td>
+                            <td>@item.Name @item.Surname</td>
+                            <td>@item.DepartmentId </td>
+                            <td><a href="@Url.Action("EvaluateProjectMember", "Home")?employeeId=@item.EmployeeId" class="btn btn-xs btn-info btn-flat ">Evaluate</a></td>
+                        </tr>
+
+                    }
+                </table>
+            }
+            else
+            {
+                <p class="warning">There are no project Member Evaluations assigned</p>
+            }
+
+
+
+        </div>
+        <div class="col-lg-6">
+            <h4>Managerial Evaluations</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Employee Id</td>
+                        <td> Employee Name & Surname</td>
+                        <td> Department Name</td>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.DepartmentWorkers)
+                {
+                   
+                        <tr>
+                            <td>@item.EmployeeId</td>
+                            <td>@item.Name @item.Surname</td>
+                            <td>@item.DepartmentId </td>
+                            <td><a href="@Url.Action("EvaluateDepartmentalWorkers","Home")?employeeId=@item.EmployeeId" class="btn btn-xs btn-info btn-flat ">Evaluate</a></td>
+                        </tr>
+                    
+                }
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+

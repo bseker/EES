@@ -1,0 +1,89 @@
+﻿@model EES.MvcUI.Models.EvaluateViewModel
+@{
+    ViewBag.Title = "EvaluateProjectMember";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<h2 class="alert-info">Evaluate Project Member</h2>
+
+<div class="container">
+    <div class="row-border">
+        <h4>Evaluated Employee Details</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Employee Name & Surname</td>
+                    <td>Employee Department</td>
+                    <td>Employee Supervisor</td>
+                    <td>Employee Project Details </td>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>@Model.EvaluatedEmployee.Name @Model.EvaluatedEmployee.Surname</td>
+                    <td>@Model.EvaluatedEmployee.DepartmentName</td>
+                    <td>@Model.EvaluatedEmployee.SupervisorName @Model.EvaluatedEmployee.SupervisorSurname </td>
+                    <td>
+                        @if (Model.EvaluatedEmployeeProjects != null)
+                        {
+                            @Model.EvaluatedEmployeeProjects.ProjectName  @Model.EvaluatedEmployeeProjects.RoleName
+                        }
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                @*<div class="box-header with-border">
+                        <h3 class="box-title">Quick Example</h3>
+                    </div>*@
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="box-body">
+
+                        @Html.HiddenFor(t => t.Evaluation.EvaluationId)
+                        @Html.HiddenFor(t => t.EvaluatedEmployee.EmployeeId)
+                        @Html.HiddenFor(t => t.EvaluatingEmployee.EmployeeId)
+
+
+                        @for (int i = 0; i < Model.Questions.Count; i++)
+                        {
+                            <div class="form-group">
+                                @Html.HiddenFor(t => t.Questions[i].QuestionId)
+                                @Html.HiddenFor(t => t.Questions[i].QuestionWeight)
+                                @Html.LabelFor(t => t.Questions[i].QuestionText, Model.Questions[i].QuestionText, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-6">
+                                    @Html.EditorFor(t => t.Questions[i].QuestionText, "Number")
+                                    @* @Html.ValidationMessageFor(t => t.Artist.ArtistName)*@
+                                </div>
+                            </div>
+                        }
+
+
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.Comment.CommentText, "Your Comment", new { @class = "col-sm-2 control-label" })
+                            <div class="col-sm-10">
+                                @Html.TextAreaFor(t => t.Comment.CommentText, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-info btn-flat pull-right">Submit Evaluation</button>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,72 @@
+
+
+@{
+    ViewBag.Title = "Department List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Department
+        <small>Department List</small>
+
+        <a href="@Url.Action("Create","Department",new{area="Admin"})" class="btn btn-xs btn-primary pull-right">
+            <i class="glyphicon glyphicon-plus"></i> Add New Department
+        </a>
+    </h1>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                @*<div class="box-header">
+                        <h3 class="box-title">Data Table With Full Features</h3>
+                    </div>*@
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="tblDepartment" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                 
+                                <th>DepartmentId</th> 
+                                 
+                                <th>DepartmentName</th> 
+                                 
+                                <th data-orderable="false"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        $(function () {
+            $('#tblDepartment').DataTable({
+                "processing": true,
+                "ajax": '@Url.Action("List","Department",new{area="Admin"})',
+                "deferRender": true,
+                "columns": [
+                     
+                    { "data": "DepartmentId" },
+                     
+                    { "data": "DepartmentName" },
+                     
+                    {
+                        "class": "text-center",
+                        render: function (data, type, row) {
+                            return '<a class="btn btn-xs btn-info btn-flat" href="@Url.Action("Edit","Department",new{area="Admin"})?departmentId='+row.DepartmentId+'">Edit</a> ' +
+                                   '<a class="btn btn-xs btn-danger btn-flat" href="@Url.Action("Delete","Department",new{area="Admin"})?departmentId='+row.DepartmentId+'">Delete</a>';
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
